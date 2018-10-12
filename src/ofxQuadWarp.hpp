@@ -19,10 +19,12 @@ public:
     void setup(int width, int height, int subdivX=4, int subdivY=4);
     void setupFromFile(string filename);
     void drawMesh(const ofTexture& tex);
+    void drawController();
     void enableController();
     void disableController();
     void saveToFile(string filename);
     bool isControllerEnabled() { return _controllerEnabled; }
+    void resetMesh();
     
     void mousePressed(ofMouseEventArgs &args);
     void mouseReleased(ofMouseEventArgs &args);
@@ -49,5 +51,4 @@ private:
     glm::vec3 calcScreenPos(glm::vec3 pt, glm::mat4 modelView);
     void updateControllers();
     void updateMesh();
-    void drawController();
 };

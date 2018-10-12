@@ -18,13 +18,6 @@ void ofxQuadWarp::setup(int width, int height, int subdivX, int subdivY)
     _subdivX = subdivX;
     _subdivY = subdivY;
     
-    // add control points
-    _ctrlPoints.clear();
-    _ctrlPoints.push_back(vec3(0, 0, 0));
-    _ctrlPoints.push_back(vec3(_width, 0, 0));
-    _ctrlPoints.push_back(vec3(0, _height, 0));
-    _ctrlPoints.push_back(vec3(width, _height, 0));
-    
     // generate mesh
     float dx = (float)_width/(float)_subdivX;
     float dy = (float)_height/(float)_subdivY;
@@ -52,6 +45,20 @@ void ofxQuadWarp::setup(int width, int height, int subdivX, int subdivY)
             _mesh.addIndex(pt3);
         }
     }
+    
+    // add control points
+    resetMesh();
+}
+
+
+void ofxQuadWarp::resetMesh()
+{
+    _ctrlPoints.clear();
+    _ctrlPoints.push_back(vec3(0, 0, 0));
+    _ctrlPoints.push_back(vec3(_width, 0, 0));
+    _ctrlPoints.push_back(vec3(0, _height, 0));
+    _ctrlPoints.push_back(vec3(_width, _height, 0));
+    updateMesh();
 }
 
 
@@ -76,9 +83,6 @@ void ofxQuadWarp::drawMesh(const ofTexture& tex)
     tex.bind();
     _mesh.draw();
     tex.unbind();
-    
-    if(_controllerEnabled)
-        drawController();
 }
 
 
@@ -89,6 +93,12 @@ void ofxQuadWarp::drawController()
     _curView = ofGetCurrentViewMatrix();
     
     ofPushStyle();
+    ofSetColor(ofColor::white);
+    ofDrawLine(_ctrlPoints[0], _ctrlPoints[1]);
+    ofDrawLine(_ctrlPoints[1], _ctrlPoints[3]);
+    ofDrawLine(_ctrlPoints[0], _ctrlPoints[2]);
+    ofDrawLine(_ctrlPoints[2], _ctrlPoints[3]);
+    
     ofSetColor(ofColor::green);
     
     for(int i=0; i<_ctrlPoints.size(); ++i) {
@@ -101,6 +111,7 @@ void ofxQuadWarp::drawController()
         else if(mouseHitLocalSpace(_ctrlPoints[i]))
             ofFill();
         else ofNoFill();
+        
         ofDrawCircle(_ctrlPoints[i], POINT_RAD);
     }
     
@@ -129,7 +140,7 @@ vec3 ofxQuadWarp::calcScreenPos(glm::vec3 pt, mat4 modelView)
 
 void ofxQuadWarp::setupFromFile(string filename)
 {
-    // Should check if file exists!
+    // Should check if the file exists!
     ofBuffer buff = ofBufferFromFile(filename);
     string inTxt = buff.getText();
     vector<string> data = ofSplitString(buff.getText(), "_");
