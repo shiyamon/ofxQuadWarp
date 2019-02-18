@@ -26,6 +26,11 @@ public:
     bool isControllerEnabled() { return _controllerEnabled; }
     void resetMesh();
     
+    int getWidth() { return _width; }
+    int getHeight() { return _height; }
+    int getSubdivX() { return _subdivX; }
+    int getSubdivY() { return _subdivY; }
+    
     void mousePressed(ofMouseEventArgs &args);
     void mouseReleased(ofMouseEventArgs &args);
     void mouseMoved(ofMouseEventArgs &args);
