@@ -7,7 +7,7 @@
 
 #include "ofxQuadWarp.hpp"
 #include "glm/gtx/matrix_decompose.hpp"
-
+#include "glm/gtx/compatibility.hpp"
 using namespace std;
 using namespace glm;
 

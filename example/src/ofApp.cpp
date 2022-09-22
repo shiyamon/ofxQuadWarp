@@ -6,7 +6,7 @@ using namespace glm;
 void ofApp::setup(){
     _image.load("check256.png");
     _quadWarp.setup(_image.getWidth(),_image.getHeight(), 8, 8);
-//    _quadWarp.setupFromFile("mesh.txt")
+    _quadWarp.setupFromFile("mesh.txt");
     _quadWarp.enableController();
 }
 
@@ -24,6 +24,8 @@ void ofApp::draw(){
     ofTranslate(100, 100, 0);
     ofScale(0.5f, 0.5f);
     _quadWarp.drawMesh(_image.getTexture());
+    if(_quadWarp.isControllerEnabled())
+        _quadWarp.drawController();
     ofPopMatrix();
 }
 

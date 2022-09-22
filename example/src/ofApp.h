@@ -3,7 +3,6 @@
 #include "ofMain.h"
 #include "ofxQuadWarp.hpp"
 
-
 class ofApp : public ofBaseApp{
 
 public:
